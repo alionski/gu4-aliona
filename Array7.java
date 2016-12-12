@@ -15,11 +15,12 @@ public class Array7 {
 		return array7[pos];
 	}
 	
-	public int[] getArray7() {
-		return array7;
-	}
-	
-	public void setArray7(int[] array) {
-		array7 = array;		
+	public Array7 clone() {
+		Array7 array = new Array7();
+		for (int i = 0; i < 7; i++) {
+			array.setElement(i,this.getElement(i));
+//			this.setElement(i, 0);
+		}
+		return array;
 	}
 }

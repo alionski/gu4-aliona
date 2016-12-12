@@ -68,12 +68,12 @@ public class TestShift extends JPanel implements ActionListener {
 					if (t.getSource() == matrix[i][j]) {
 						int elem = Integer.parseInt(matrix[i][j].getText());
 						matrixArray.setElement(i, j, elem );
-						System.out.print("it worked, elem: " + elem + " ");
+						System.out.println("it worked, elem: " + elem + " ");
 					}
 				}
 			}
 			for (int k = 0; k <2; k++) {
-				for (int l = 0; l < 2; l++) {
+				for (int l = 0; l < 7; l++) {
 					if (t.getSource() == sideCols[k][l]) {
 						sideColsArray[k].setElement(l, Integer.parseInt(sideCols[k][l].getText()));
 					}
@@ -104,8 +104,8 @@ public class TestShift extends JPanel implements ActionListener {
 		
 		//copying from array7x7[0] to the column on the left side. 
 		
-		buffer.setArray7(matrixArray.getCol(0).getArray7());
-		sideColsArray[0].setArray7(buffer.getArray7());
+		buffer = matrixArray.getCol(0).clone();
+		sideColsArray[0] = buffer.clone();
 		for (int j = 0; j <7; j++) {
 			sideCols[0][j].setText(String.valueOf(buffer.getElement(j)));
 		}
@@ -114,11 +114,11 @@ public class TestShift extends JPanel implements ActionListener {
 		for (int i =0; i < 7; i++) {
 			if (i == 6) {
 				for (int k = 0; k < 7; k++) {				
-					buffer.setArray7(sideColsArray[1].getArray7());
+					buffer = sideColsArray[1].clone();
 					sideCols[1][k].setText("");
 				}
 			} else {
-				buffer = matrixArray.getCol(i+1);
+				buffer = matrixArray.getCol(i+1).clone();
 			}
 			for (int p = 0; p < 7; p++) {
 				int value = buffer.getElement(p);
@@ -131,8 +131,8 @@ public class TestShift extends JPanel implements ActionListener {
 	public void shiftRightAction() {
 		
 		// copying from the last 7x7 column to the right.
-		buffer.setArray7(matrixArray.getCol(6).getArray7());
-		sideColsArray[1].setArray7(buffer.getArray7());
+		buffer = matrixArray.getCol(6).clone();
+		sideColsArray[1] = buffer.clone();
 		for (int j = 0; j <7; j++) {
 			sideCols[1][j].setText(String.valueOf(buffer.getElement(j)));
 		}		
@@ -140,11 +140,11 @@ public class TestShift extends JPanel implements ActionListener {
 		for (int i = 6; i >= 0; i--) {
 			if (i == 0) {
 				for (int k = 0; k < 7; k++) {				
-					buffer.setArray7(sideColsArray[0].getArray7());
+					buffer = sideColsArray[0].clone();
 					sideCols[0][k].setText("");
 				}
 			} else {
-				buffer = matrixArray.getCol(i-1);
+				buffer = matrixArray.getCol(i-1).clone();
 			}
 			for (int p = 0; p < 7; p++) {
 				int value = buffer.getElement(p);
