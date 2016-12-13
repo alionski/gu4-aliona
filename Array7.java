@@ -23,4 +23,10 @@ public class Array7 {
 		}
 		return array;
 	}
+	
+	public void clean() {
+		for (int i = 0; i < 7; i++) {
+			array7[i] = 0;
+		}
+	}
 }

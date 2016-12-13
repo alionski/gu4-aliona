@@ -45,4 +45,10 @@ public class Array7x7 {
 		}
 		return colObj;
 	}
+	
+	public void cleanCol(int col) {
+		for (int i=0; i<7; i++) {
+			array7x7[i][col] = 0;
+		}
+	}
 }

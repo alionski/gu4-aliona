@@ -133,6 +133,7 @@ public class TestShift extends JPanel implements ActionListener {
 		// copying from the last 7x7 column to the right.
 		buffer = matrixArray.getCol(6).clone();
 		sideColsArray[1] = buffer.clone();
+		matrixArray.getCol(6).clean();
 		for (int j = 0; j <7; j++) {
 			sideCols[1][j].setText(String.valueOf(buffer.getElement(j)));
 		}		
@@ -141,15 +142,18 @@ public class TestShift extends JPanel implements ActionListener {
 			if (i == 0) {
 				for (int k = 0; k < 7; k++) {				
 					buffer = sideColsArray[0].clone();
-					sideCols[0][k].setText("");
+//					sideCols[0][k].setText("");
 				}
+				sideColsArray[0].clean();
 			} else {
 				buffer = matrixArray.getCol(i-1).clone();
-			}
-			for (int p = 0; p < 7; p++) {
-				int value = buffer.getElement(p);
-				matrixArray.setCol(i, buffer);
-				matrix[p][i].setText(String.valueOf(value));
+				
+				for (int p = 0; p < 7; p++) {
+					int value = buffer.getElement(p);
+					matrixArray.setCol(i, buffer);
+					matrixArray.cleanCol(i-1);
+					matrix[p][i].setText(String.valueOf(value));
+				}
 			}			
 		}
 	}
