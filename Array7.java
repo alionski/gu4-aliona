@@ -15,11 +15,21 @@ public class Array7 {
 		return array7[pos];
 	}
 	
+	public void setArray7(Array7 newArray) {
+		for (int i = 0; i < array7.length; i++) {
+			this.setElement(i, newArray.getElement(i));
+		}
+	}
+	
 	public int[] getArray7() {
 		return array7;
 	}
 	
-	public void setArray7(int[] array) {
-		array7 = array;		
+	public String toString() {
+		String res = "";
+		for (int i = 0; i <array7.length; i++) {
+			res += array7[i] + "\t";
+		}
+		return res;
 	}
 }
