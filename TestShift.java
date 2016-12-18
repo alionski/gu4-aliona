@@ -10,7 +10,6 @@ public class TestShift extends JPanel implements ActionListener {
 	private JButton shiftLeft = new JButton("Shift to the left");
 	
 	private Array7[] sideColsArray = new Array7[2];
-	private Array7 buffer = new Array7();
 	private Array7x7 matrixArray = new Array7x7();
 	
 	private JPanel left = new JPanel();
@@ -85,9 +84,19 @@ public class TestShift extends JPanel implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		try {
 			if (e.getSource() == shiftRight) {					
-				shiftRightAction();				
+				matrixArray.shiftRight(sideColsArray[0], sideColsArray[1]);
+				// debug print:
+				System.out.println("Left column:\n" + sideColsArray[0].toString());
+				System.out.println(matrixArray.toString());
+				System.out.println("Right column:\n " + sideColsArray[1].toString());	
+				updateDisplay();
 			} else if (e.getSource() == shiftLeft) {								
-				shiftLeftAction();	
+				matrixArray.shiftLeft(sideColsArray[0], sideColsArray[1]);
+				// debug print:
+				System.out.println("Left column:\n" + sideColsArray[0].toString());
+				System.out.println(matrixArray.toString());
+				System.out.println("Right column:\n " + sideColsArray[1].toString());
+				updateDisplay();
 			}
 		} catch (ArrayIndexOutOfBoundsException err) {
 			// throws the exception even where there's no data in the input labels because Array7 object are 
@@ -100,60 +109,13 @@ public class TestShift extends JPanel implements ActionListener {
 		}
 	}
 		
-	public void shiftLeftAction() {		
-		
-		//copying from array7x7[0] to the column on the left side. 
-		
-		buffer = matrixArray.getCol(0).clone();
-		sideColsArray[0] = buffer.clone();
-		for (int j = 0; j <7; j++) {
-			sideCols[0][j].setText(String.valueOf(buffer.getElement(j)));
-		}
-		
-		// shifting the 7x7 columns and copying from the right column. 	
-		for (int i =0; i < 7; i++) {
-			if (i == 6) {
-				for (int k = 0; k < 7; k++) {				
-					buffer = sideColsArray[1].clone();
-					sideCols[1][k].setText("");
-				}
-			} else {
-				buffer = matrixArray.getCol(i+1).clone();
-			}
-			for (int p = 0; p < 7; p++) {
-				int value = buffer.getElement(p);
-				matrixArray.setCol(i, buffer);
-				matrix[p][i].setText(String.valueOf(value));
-			}			
-		}
-	}
-	
-	public void shiftRightAction() {
-		
-		// copying from the last 7x7 column to the right.
-		buffer = matrixArray.getCol(6).clone();
-		sideColsArray[1] = buffer.clone();
-		matrixArray.getCol(6).clean();
-		for (int j = 0; j <7; j++) {
-			sideCols[1][j].setText(String.valueOf(buffer.getElement(j)));
-		}		
-		// shifting the 7x7 columns and copying from the left column. 	
-		for (int i = 6; i >= 0; i--) {
-			if (i == 0) {
-				for (int k = 0; k < 7; k++) {				
-					buffer = sideColsArray[0].clone();
-//					sideCols[0][k].setText("");
-				}
-				sideColsArray[0].clean();
-			} else {
-				buffer = matrixArray.getCol(i-1).clone();
-				
-				for (int p = 0; p < 7; p++) {
-					int value = buffer.getElement(p);
-					matrixArray.setCol(i, buffer);
-					matrixArray.cleanCol(i-1);
-					matrix[p][i].setText(String.valueOf(value));
-				}
+	public void updateDisplay() {
+		for (int i = 0; i < 7; i++) {
+			sideCols[0][i].setText(String.valueOf(sideColsArray[0].getElement(i)));
+			sideCols[1][i].setText(String.valueOf(sideColsArray[1].getElement(i)));
+			
+			for (int k = 0; k <7; k++) {
+				matrix[i][k].setText(String.valueOf(matrixArray.getElement(i, k)));
 			}			
 		}
 	}

@@ -14,19 +14,22 @@ public class Array7 {
 	public int getElement(int pos) {
 		return array7[pos];
 	}
-	
-	public Array7 clone() {
-		Array7 array = new Array7();
-		for (int i = 0; i < 7; i++) {
-			array.setElement(i,this.getElement(i));
-//			this.setElement(i, 0);
+  
+	public void setArray7(Array7 newArray) {
+		for (int i = 0; i < array7.length; i++) {
+			this.setElement(i, newArray.getElement(i));
 		}
-		return array;
 	}
 	
-	public void clean() {
-		for (int i = 0; i < 7; i++) {
-			array7[i] = 0;
+	public int[] getArray7() {
+		return array7;
+	}
+	
+	public String toString() {
+		String res = "";
+		for (int i = 0; i <array7.length; i++) {
+			res += array7[i] + "\t";
 		}
+		return res;
 	}
 }
