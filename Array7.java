@@ -14,7 +14,7 @@ public class Array7 {
 	public int getElement(int pos) {
 		return array7[pos];
 	}
-	
+  
 	public void setArray7(Array7 newArray) {
 		for (int i = 0; i < array7.length; i++) {
 			this.setElement(i, newArray.getElement(i));
