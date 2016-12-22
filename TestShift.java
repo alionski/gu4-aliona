@@ -3,6 +3,13 @@ import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
+/** 
+ * Class that tests the use of Array7x7 when shifting the contents to the right/left.
+ * Don't forget to hit enter when adding numbers through the display. 
+ * @author Aliona
+ *
+ */
+
 public class TestShift extends JPanel implements ActionListener {
 	private JTextField[][] sideCols = new JTextField[2][7];
 	private JTextField[][] matrix = new JTextField[7][7];

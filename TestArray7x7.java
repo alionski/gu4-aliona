@@ -3,6 +3,12 @@ import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
+/**
+ * Test of Array7x7. One of the first assignments. 
+ * @author Aliona
+ *
+ */
+
 public class TestArray7x7 extends JPanel implements ActionListener {
 	private JTextField[] rows = new JTextField[7];
 	private JTextField[] cols = new JTextField[7];

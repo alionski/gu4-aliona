@@ -8,13 +8,19 @@ public class Array7 {
 		}
 	}
 	
+	public Array7(int value) {
+		for (int i = 0; i<array7.length; i++) {
+			array7[i] = value;
+		}
+	}
+	
 	public void setElement(int pos, int value) {
 		array7[pos] = value;
 	}
 	public int getElement(int pos) {
 		return array7[pos];
 	}
-  
+	
 	public void setArray7(Array7 newArray) {
 		for (int i = 0; i < array7.length; i++) {
 			this.setElement(i, newArray.getElement(i));

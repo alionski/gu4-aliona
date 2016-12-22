@@ -18,6 +18,14 @@ public class Array7x7 {
 		}
 	}
 	
+	public Array7x7(int[][] value) {
+		for (int row = 0; row < array7x7.length; row++) {
+			for (int col = 0; col < array7x7[row].length; col++) {
+				array7x7[row][col] = value[row][col];
+			}
+		}
+	}
+	
 	public void setElement(int row, int col, int value) {
 		array7x7[row][col] = value;
 	}
@@ -52,6 +60,10 @@ public class Array7x7 {
 			colObj.setElement(i, array7x7[i][col]);
 		}
 		return colObj;
+	}
+	
+	public int[][] getArray() {
+		return array7x7;
 	}
 	
 	public void shiftLeft(Array7 left, Array7 right) {				
