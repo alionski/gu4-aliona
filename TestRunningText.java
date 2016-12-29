@@ -29,7 +29,6 @@ public class TestRunningText extends JPanel implements ActionListener {
 	private JTextField[][] matrix = new JTextField[7][7];
 	private JButton shiftRight = new JButton("Shift to the right");
 	private JButton shiftLeft = new JButton("Shift to the left");
-	
 	private Array7[] sideColsArray = new Array7[2];
 	private JTextField[][] sideCols = new JTextField[2][7];
 	private JPanel left = new JPanel();

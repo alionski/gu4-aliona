@@ -86,11 +86,43 @@ public class Array7x7 {
 		}
 	}
 	
+	public void shiftLeft(Array7 right) {				
+		Array7 buffer = new Array7();		
+		// shifting the 7x7 columns and copying from the right column. 	
+		for (int i =0; i < array7x7.length; i++) {
+			if (i == 6) {			
+				buffer.setArray7(right);
+				right.setArray7( new Array7());
+			} else {
+				buffer.setArray7(this.getCol(i+1));
+			}			
+			for (int p = 0; p < 7; p++) {
+				this.setCol(i, buffer);
+			}			
+		}
+	}
+	
 	public void shiftRight(Array7 left, Array7 right) {		
 		Array7 buffer = new Array7();
 		
 		// copying from the last 7x7 column to the right.
 		right.setArray7(this.getCol(6));	
+		// shifting the 7x7 columns and copying from the left column. 	
+		for (int i = array7x7.length-1; i >= 0; i--) {
+			if (i == 0) {
+				buffer.setArray7(left);
+				left.setArray7( new Array7());
+			} else {
+				buffer.setArray7(this.getCol(i-1));				
+			}					
+			for (int p = 0; p < 7; p++) {
+				this.setCol(i, buffer);
+			}
+		}
+	}
+	
+	public void shiftRight(Array7 left) {		
+		Array7 buffer = new Array7();
 		// shifting the 7x7 columns and copying from the left column. 	
 		for (int i = array7x7.length-1; i >= 0; i--) {
 			if (i == 0) {

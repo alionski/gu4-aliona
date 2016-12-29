@@ -21,35 +21,28 @@ import javax.swing.SwingUtilities;
 /**
  * Demo with one letter, basically the presentation itself. Uses Android's Color and Rolf's ColorDisplay. 
  * Has TextController as an associated class. 
- * Most of the methods are half-written atm, only for demo.
  * @author Aliona
- *
  */
 public class RunningTextColorDisplay extends JPanel implements ActionListener{
 	private TextController ctrl;
-	private ColorDisplay display = new ColorDisplay(1, 5, Color.YELLOW, Color.GRAY);
+	private ColorDisplay display = new ColorDisplay(1, 5, Color.WHITE, Color.GRAY);
 	private JTextField usrInput = new JTextField();
-	private JButton go = new JButton("Go!");
-	private JButton shiftRight = new JButton("Shift right");
-	private JPanel lowerMain = new JPanel();
-	private JPanel upper = new JPanel();
+	private JButton shiftLeft = new JButton("Go left!");
+	private JButton shiftRight = new JButton("Go right!");
 	private JPanel lower = new JPanel();
 	private String usrText = "";
 	
 	public RunningTextColorDisplay() {
 
 		setLayout(new BorderLayout());
-		lowerMain.setLayout(new GridLayout(2, 1));
-		upper.setLayout(new GridLayout(1, 2));
-		lower.setLayout( new GridLayout(1,1)); // can be changed if there's need to add more buttons
-		upper.add(usrInput);
-		upper.add(go);
-		lower.add(shiftRight);
-		go.addActionListener(this);
+		lower.setLayout(new GridLayout(1, 3));
+		shiftLeft.addActionListener(this);
 		shiftRight.addActionListener(this);
-		lowerMain.add(upper);
-		lowerMain.add(lower);
-		add(lowerMain, BorderLayout.SOUTH);
+//		usrInput.setPreferredSize( new Dimension( 800, 20));
+		lower.add(usrInput);
+		lower.add(shiftLeft);
+		lower.add(shiftRight);
+		add(lower, BorderLayout.SOUTH);
 		add(display, BorderLayout.CENTER);		
 	}
 	
@@ -58,13 +51,12 @@ public class RunningTextColorDisplay extends JPanel implements ActionListener{
 	}
 	
 	public void actionPerformed(ActionEvent e) {
-		if (e.getSource() == go) {
-			usrText = usrInput.getText();
-			ctrl.show();
-			// launch the text
+		if (e.getSource() == shiftLeft) {
+			usrText = usrInput.getText();			
+			ctrl.moveLeft(usrText);
 		} else if (e.getSource() == shiftRight) {
 			usrText = usrInput.getText();
-			// launch shifting to the right 
+			ctrl.moveRight(usrText);
 		}
 	}
 	
