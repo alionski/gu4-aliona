@@ -19,7 +19,7 @@ import javax.swing.SwingUtilities;
 
 /**
  * A test class that demonstrates how the shifting algorithm works on a big display with five panels.
- * Uses swing and the standard library in general. Experiments with color (awt.Color and not Android's Color). 
+ * Uses swing and the standard library in general. Experiments with colour (awt.Color and not Android's Color). 
  * @author Aliona
  *
  */
@@ -105,6 +105,9 @@ public class TestBigScreenSwing extends JPanel implements ActionListener {
 		add(centerMain, BorderLayout.CENTER);
 	}
 	
+	/**
+	 * Method that listens to the buttons. 
+	 */
 	public void actionPerformed(ActionEvent e) {
 		try {
 			if (e.getSource() == shiftRight) {					
@@ -115,8 +118,7 @@ public class TestBigScreenSwing extends JPanel implements ActionListener {
 				timer.schedule(new ShiftLeft(), 10, 200);
 			}
 		} catch (ArrayIndexOutOfBoundsException err) {
-			// throws the exception even where there's no data in the input labels because Array7 object are 
-			// created with the values 0 in the constructor --> set to null in the constructor maybe. 
+			// pops up if the index entered is invalid.
 			JOptionPane.showMessageDialog(null, "Such row or column doesn't exist!");
 		} catch (NumberFormatException err2) {
 			// pops up if the num of the column/row is null, and if the input arrays are not full --> fix (confusing)
@@ -125,6 +127,11 @@ public class TestBigScreenSwing extends JPanel implements ActionListener {
 		}
 	}
 			
+	/**
+	 * Private class that launches the data to the left on the display and updates it.
+	 * @author Aliona
+	 *
+	 */
 	private class ShiftLeft extends TimerTask {
 		Array7 right = new Array7();
 		boolean reset = false;
@@ -133,7 +140,7 @@ public class TestBigScreenSwing extends JPanel implements ActionListener {
 			if ((column == 6) && (block == numbers.length-1) && (!reset)) {
 				column = 0;
 				block = 0;
-				reset = true;
+				reset = true; // needed to make the shifting stop.
 			}	
 			
 			right.setArray7(numbers[block].getCol(column));		
@@ -156,6 +163,11 @@ public class TestBigScreenSwing extends JPanel implements ActionListener {
 		}
 	}
 	
+	/**
+	 * Private class that launches the data to the right on the display and updates it.
+	 * @author Aliona
+	 *
+	 */
 	private class ShiftRight extends TimerTask {
 		Array7 left = new Array7();
 		boolean reset = false;
@@ -164,7 +176,7 @@ public class TestBigScreenSwing extends JPanel implements ActionListener {
 			if ((column == 0) && (block == 0) && (!reset)) {
 				column = 6;
 				block = numbers.length - 1;
-				reset = true;
+				reset = true; // needed to make the shifting stop.
 			}	
 			
 			left.setArray7(numbers[block].getCol(column));	
@@ -186,6 +198,9 @@ public class TestBigScreenSwing extends JPanel implements ActionListener {
 		}
 	}
 	
+	/**
+	 * Method that updates the display during each execution of the TimerTask classes.
+	 */
 	public void updateDisplay() {
 		for (int i = 0; i < 7; i++) {
 			sideCols[0][i].setText(String.valueOf(sideColsArray[0].getElement(i)));

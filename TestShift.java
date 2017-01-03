@@ -26,6 +26,9 @@ public class TestShift extends JPanel implements ActionListener {
 	private JPanel right = new JPanel();
 	private JPanel center = new JPanel();
 	
+	/**
+	 * Constructor that paints an interactive swing display. 
+	 */
 	public TestShift() {
 		setLayout( new BorderLayout());
 		setPreferredSize( new Dimension(360,300));
@@ -69,29 +72,39 @@ public class TestShift extends JPanel implements ActionListener {
 		add(center, BorderLayout.CENTER);
 	} 
 	
+	/**
+	 * ActionListenet that listens to the JTextFields. Once the user hits enter, it stores the data in corresponding 
+	 * cells in the corresponding array.
+	 * @author Aliona
+	 *
+	 */
 	private class MyTextListener implements ActionListener {
-		public void actionPerformed(ActionEvent t) {
+		public void actionPerformed(ActionEvent enter) {
 			
-			for (int i = 0; i <7; i++) {
-				for (int j = 0; j < 7; j++) {
-					if (t.getSource() == matrix[i][j]) {
-						int elem = Integer.parseInt(matrix[i][j].getText());
-						matrixArray.setElement(i, j, elem );
-						System.out.println("it worked, elem: " + elem + " ");
+			for (int row = 0; row <7; row++) {
+				for (int col = 0; col < 7; col++) {
+					if (enter.getSource() == matrix[row][col]) {
+						int elem = Integer.parseInt(matrix[row][col].getText());
+						matrixArray.setElement(row, col, elem );
+						// debug print:
+//						System.out.println("it worked, elem: " + elem + " ");
 					}
 				}
 			}
 			
-			for (int k = 0; k <2; k++) {
-				for (int l = 0; l < 7; l++) {
-					if (t.getSource() == sideCols[k][l]) {
-						sideColsArray[k].setElement(l, Integer.parseInt(sideCols[k][l].getText()));
+			for (int rowSide = 0; rowSide <2; rowSide++) {
+				for (int colSide = 0; colSide < 7; colSide++) {
+					if (enter.getSource() == sideCols[rowSide][colSide]) {
+						sideColsArray[rowSide].setElement(colSide, Integer.parseInt(sideCols[rowSide][colSide].getText()));
 					}
 				}
 			}
 		}
 	}
 	
+	/**
+	 * Method that listens to the buttons on the right side, transfers the specified data and updates the display.
+	 */
 	public void actionPerformed(ActionEvent e) {
 		try {
 			if (e.getSource() == shiftRight) {					
@@ -110,16 +123,19 @@ public class TestShift extends JPanel implements ActionListener {
 				updateDisplay();
 			}
 		} catch (ArrayIndexOutOfBoundsException err) {
-			// throws the exception even where there's no data in the input labels because Array7 object are 
-			// created with the values 0 in the constructor --> set to null in the constructor maybe. 
+			// pops up if the entered index is invalid.
 			JOptionPane.showMessageDialog(null, "Such row or column doesn't exist!");
 		} catch (NumberFormatException err2) {
-			// pops up if the num of the column/row is null, and if the input arrays are not full
+			// pops up if the index of the column/row is null and if the input arrays are not full
 			JOptionPane.showMessageDialog(null, "First enter the number of a column or a row to work with.\n"+
-					"Or make sure there's data in the matrix to work with. ");
+					"Or make sure there's data in the matrix and side columns to work with. ");
 		}
 	}
 		
+	/**
+	 * Method that updates the data on the display. It's needed because it doesn't happen automatically when the data 
+	 * in the matrix and side column and row change. 
+	 */
 	public void updateDisplay() {
 		for (int i = 0; i < 7; i++) {
 			sideCols[0][i].setText(String.valueOf(sideColsArray[0].getElement(i)));

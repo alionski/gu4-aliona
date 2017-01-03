@@ -18,7 +18,7 @@ import javax.swing.SwingUtilities;
 
 /**
  * Class that demonstrates how to move data (numbers) on a swing display (i.e. without Rolf's ColorDisplay)
- * Can be easily adapted to shift other arrays with a different type of data (colours), but the logic is the same.
+ * Can be easily adapted to shift other arrays with a different type of data (colours) as the logic is the same.
  * No need to enter any numbers because it uses a predefined array with numbers to show the flow of data. The gray columns
  * on both sides are basically useless.
  * @author Aliona
@@ -92,6 +92,11 @@ public class TestRunningText extends JPanel implements ActionListener {
 		add(center, BorderLayout.CENTER);	
 	}
 	
+	/**
+	 * Class that listens to the user input in JTextFields. The user must hit enter each time to store the new value in
+	 * the arrays. 
+	 * @author Aliona
+	 */
 	private class MyTextListener implements ActionListener {
 		public void actionPerformed(ActionEvent t) {
 			for (int i = 0; i <7; i++) {
@@ -113,6 +118,9 @@ public class TestRunningText extends JPanel implements ActionListener {
 		}
 	}
 	
+	/**
+	 * Method that listens to the buttons. 
+	 */
 	public void actionPerformed(ActionEvent e) {
 		try {
 			if (e.getSource() == shiftRight) {					
@@ -122,9 +130,10 @@ public class TestRunningText extends JPanel implements ActionListener {
 				timer = new Timer();
 				timer.schedule(new ShiftLeft(), 300, 300);
 			}
+			// catching exceptions is unnecessary in this class, but I'll let them be here because I just
+			// ctrl+C, ctrl+V'ed when I was writing it :)
 		} catch (ArrayIndexOutOfBoundsException err) {
-			// throws the exception even where there's no data in the input labels because Array7 object are 
-			// created with the values 0 in the constructor --> set to null in the constructor maybe. 
+			// pops up if the index entered is invalid.
 			JOptionPane.showMessageDialog(null, "Such row or column doesn't exist!");
 		} catch (NumberFormatException err2) {
 			// pops up if the num of the column/row is null, and if the input arrays are not full
@@ -133,6 +142,11 @@ public class TestRunningText extends JPanel implements ActionListener {
 		}
 	}
 		
+	/**
+	 * Private class that launches the data to the left on the display and updates it.
+	 * @author Aliona
+	 *
+	 */
 	private class ShiftLeft extends TimerTask {
 		private int column = 0;
 		private int block = 0;
@@ -156,6 +170,9 @@ public class TestRunningText extends JPanel implements ActionListener {
 		}
 	}
 	
+	/**
+	 * Private class that launches the data to the right on the display and updates it.
+	 */
 	private class ShiftRight extends TimerTask {
 		private int column = 6;
 		private int block = numbers.length-1;
@@ -179,6 +196,10 @@ public class TestRunningText extends JPanel implements ActionListener {
 		}
 	}
 	
+	
+	/**
+	 * Method that updates the screen after each execution of the TimerTask cklasses' methods. 
+	 */
 	public void updateDisplay() {
 		for (int i = 0; i < 7; i++) {
 			sideCols[0][i].setText(String.valueOf(sideColsArray[0].getElement(i)));
