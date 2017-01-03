@@ -1,13 +1,15 @@
+package final_version;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
 /** 
+ * Exercise 5.1.2 (Moment 3).
  * Class that tests the use of Array7x7 when shifting the contents to the right/left.
  * Don't forget to hit enter when adding numbers through the display. 
+ * User must press enter after typing a number in a cell to enable MyTextListener to save it in the array.
  * @author Aliona
- *
  */
 
 public class TestShift extends JPanel implements ActionListener {
@@ -69,6 +71,7 @@ public class TestShift extends JPanel implements ActionListener {
 	
 	private class MyTextListener implements ActionListener {
 		public void actionPerformed(ActionEvent t) {
+			
 			for (int i = 0; i <7; i++) {
 				for (int j = 0; j < 7; j++) {
 					if (t.getSource() == matrix[i][j]) {
@@ -78,6 +81,7 @@ public class TestShift extends JPanel implements ActionListener {
 					}
 				}
 			}
+			
 			for (int k = 0; k <2; k++) {
 				for (int l = 0; l < 7; l++) {
 					if (t.getSource() == sideCols[k][l]) {
@@ -110,9 +114,9 @@ public class TestShift extends JPanel implements ActionListener {
 			// created with the values 0 in the constructor --> set to null in the constructor maybe. 
 			JOptionPane.showMessageDialog(null, "Such row or column doesn't exist!");
 		} catch (NumberFormatException err2) {
-			// pops up if the num of the column/row is null, and if the input arrays are not full --> fix (confusing)
+			// pops up if the num of the column/row is null, and if the input arrays are not full
 			JOptionPane.showMessageDialog(null, "First enter the number of a column or a row to work with.\n"+
-					"Or make sure there's data in the matrix work with. ");
+					"Or make sure there's data in the matrix to work with. ");
 		}
 	}
 		

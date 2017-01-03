@@ -1,3 +1,4 @@
+package final_version;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -18,7 +19,8 @@ import javax.swing.SwingUtilities;
 /**
  * Class that demonstrates how to move data (numbers) on a swing display (i.e. without Rolf's ColorDisplay)
  * Can be easily adapted to shift other arrays with a different type of data (colours), but the logic is the same.
- * No need to enter any nymbers because it uses the Array7x7 array numbers to show the flow of data. 
+ * No need to enter any numbers because it uses a predefined array with numbers to show the flow of data. The gray columns
+ * on both sides are basically useless.
  * @author Aliona
  *
  */
@@ -29,17 +31,13 @@ public class TestRunningText extends JPanel implements ActionListener {
 	private JTextField[][] matrix = new JTextField[7][7];
 	private JButton shiftRight = new JButton("Shift to the right");
 	private JButton shiftLeft = new JButton("Shift to the left");
-	
 	private Array7[] sideColsArray = new Array7[2];
 	private JTextField[][] sideCols = new JTextField[2][7];
 	private JPanel left = new JPanel();
 	private JPanel down = new JPanel();
 	private JPanel right = new JPanel();
 	private JPanel center = new JPanel();
-	
-	private int column = 0;
-	private int block = 0;
-	
+
 	public TestRunningText() {
 		
 		for (int i = 0; i < numbers.length; i++) {
@@ -118,11 +116,9 @@ public class TestRunningText extends JPanel implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		try {
 			if (e.getSource() == shiftRight) {					
-//				shiftRightAction();
 				timer = new Timer();
 				timer.schedule(new ShiftRight(), 300, 300);
 			} else if (e.getSource() == shiftLeft) {	
-//				shiftLeftAction();
 				timer = new Timer();
 				timer.schedule(new ShiftLeft(), 300, 300);
 			}
@@ -131,46 +127,16 @@ public class TestRunningText extends JPanel implements ActionListener {
 			// created with the values 0 in the constructor --> set to null in the constructor maybe. 
 			JOptionPane.showMessageDialog(null, "Such row or column doesn't exist!");
 		} catch (NumberFormatException err2) {
-			// pops up if the num of the column/row is null, and if the input arrays are not full --> fix (confusing)
+			// pops up if the num of the column/row is null, and if the input arrays are not full
 			JOptionPane.showMessageDialog(null, "First enter the number of a column or a row to work with.\n"+
 					"Or make sure there's data in the matrix work with. ");
 		}
 	}
 		
-	
-//	public void shiftLeftAction() {
-//		
-//		Array7 right = new Array7();
-//				
-//		for (int array = 0; array < numbers.length; array++) {
-//			for (int col = 0; col < 7; col ++) {
-//				right.setArray7(numbers[array].getCol(col));		
-//				matrixArray.shiftLeft(sideColsArray[0], right);
-//				// debug print:
-//				System.out.println(matrixArray.toString());
-//				updateDisplay();
-//			}
-//		}
-//	}
-	
-//	public void shiftRightAction() {
-//	
-//	Array7 left = new Array7();
-//	for (int array = numbers.length-1; array >= 0; array--) {
-//		for (int col = 6; col >= 0; col--) {
-//			left.setArray7(numbers[array].getCol(col));		
-//			matrixArray.shiftRight(left, sideColsArray[1]);
-//			// debug print:
-//			System.out.println(matrixArray.toString());
-//			updateDisplay();
-//		}
-//	}
-//}
-	
 	private class ShiftLeft extends TimerTask {
-//		int column = 0;
-//		int block = 0;
-		Array7 right = new Array7();
+		private int column = 0;
+		private int block = 0;
+		private Array7 right = new Array7();
 		
 		public void run() {
 			right.setArray7(numbers[block].getCol(column));		
@@ -191,9 +157,9 @@ public class TestRunningText extends JPanel implements ActionListener {
 	}
 	
 	private class ShiftRight extends TimerTask {
-//		int column = 6;
-//		int block = numbers.length-1;
-		Array7 left = new Array7();
+		private int column = 6;
+		private int block = numbers.length-1;
+		private Array7 left = new Array7();
 		
 		public void run() {				
 			left.setArray7(numbers[block].getCol(column));		

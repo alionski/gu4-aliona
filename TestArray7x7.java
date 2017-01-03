@@ -1,22 +1,23 @@
+package final_version;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
 /**
- * Test of Array7x7. One of the first assignments. 
+ * Test of Array7x7. 
+ * Exercise 4.2.1 (Moment 2).
  * @author Aliona
- *
  */
 
 public class TestArray7x7 extends JPanel implements ActionListener {
 	private JTextField[] rows = new JTextField[7];
 	private JTextField[] cols = new JTextField[7];
 	private JLabel[][] matrix = new JLabel[7][7];
-	private JButton readRow = new JButton("Read row");
-	private JButton writeRow = new JButton("Write row");
-	private JButton readCol = new JButton("Read col");
-	private JButton writeCol = new JButton("Write col");
+	private JButton readRowBtn = new JButton("Read row");
+	private JButton writeRowBtn = new JButton("Write row");
+	private JButton readColBtn = new JButton("Read col");
+	private JButton writeColBtn = new JButton("Write col");
 	private JTextField inputRow = new JTextField();
 	private JTextField inputCol = new JTextField();
 	private Array7 colsArray = new Array7();
@@ -28,6 +29,9 @@ public class TestArray7x7 extends JPanel implements ActionListener {
 	private JPanel right = new JPanel();
 	private JPanel center = new JPanel();
 	
+	/**
+	 * Constructor that creates and  displays an interactive panel to write and read numbers. 
+	 */
 	public TestArray7x7(){
 		setPreferredSize( new Dimension(565,430));
 		setLayout(null);
@@ -57,15 +61,15 @@ public class TestArray7x7 extends JPanel implements ActionListener {
 			}
 		}
 		
-		right.add(readRow); right.add(writeRow);
-		readRow.setBackground(Color.DARK_GRAY); readRow.setForeground(Color.WHITE);
-		writeRow.setBackground(Color.DARK_GRAY); writeRow.setForeground(Color.WHITE);
-		readRow.addActionListener( this ); writeRow.addActionListener( this);
+		right.add(readRowBtn); right.add(writeRowBtn);
+		readRowBtn.setBackground(Color.DARK_GRAY); readRowBtn.setForeground(Color.WHITE);
+		writeRowBtn.setBackground(Color.DARK_GRAY); writeRowBtn.setForeground(Color.WHITE);
+		readRowBtn.addActionListener( this ); writeRowBtn.addActionListener( this);
 		right.add(inputRow); inputRow.setHorizontalAlignment(SwingConstants.CENTER);	
-		right.add(readCol); right.add(writeCol);
-		readCol.setBackground(Color.DARK_GRAY); readCol.setForeground(Color.WHITE);
-		writeCol.setBackground(Color.DARK_GRAY); writeCol.setForeground(Color.WHITE);
-		readCol.addActionListener( this ); writeCol.addActionListener( this );
+		right.add(readColBtn); right.add(writeColBtn);
+		readColBtn.setBackground(Color.DARK_GRAY); readColBtn.setForeground(Color.WHITE);
+		writeColBtn.setBackground(Color.DARK_GRAY); writeColBtn.setForeground(Color.WHITE);
+		readColBtn.addActionListener( this ); writeColBtn.addActionListener( this );
 		right.add(inputCol); inputCol.setHorizontalAlignment(SwingConstants.CENTER);	
 		
 		add(left);
@@ -74,30 +78,39 @@ public class TestArray7x7 extends JPanel implements ActionListener {
 		add(right);	
 	}
 	
+	/**
+	 * ActionListener that listens to the four buttons.
+	 */
 	public void actionPerformed(ActionEvent e) {
 		try {
-			if (e.getSource() == readRow) {					
-				readRowAction();				
-			} else if (e.getSource() == writeRow) {								
-				writeRowAction();				
-			} else if (e.getSource() == readCol) {					
-				readColAction();				
-			} else if (e.getSource() == writeCol) {					
-				writeColAction();				
+			if (e.getSource() == readRowBtn) {					
+				readRow();				
+			} else if (e.getSource() == writeRowBtn) {								
+				writeRow();				
+			} else if (e.getSource() == readColBtn) {					
+				readCol();				
+			} else if (e.getSource() == writeColBtn) {					
+				writeCol();				
 			}
 		} catch (ArrayIndexOutOfBoundsException err) {
-			// throws the exception even where there's no data in the input labels because Array7 object are 
-			// created with the values 0 in the constructor --> set to null in the constructor maybe. 
+			// when the user enters an invalid column/row index.
 			JOptionPane.showMessageDialog(null, "Such row or column doesn't exist!");
 		} catch (NumberFormatException err2) {
-			// pops up if the num of the column/row is null, and if the input arrays are not full --> fix (confusing)
+			// pops up if the num of the column/row is null, or if the input array (one of the two separate arrays on the
+			// sides, depending on the source button) is not full.
 			JOptionPane.showMessageDialog(null, "First enter the number of a column or a row to work with.\n"+
-					"Or make sure there's data in the matrix work with. ");
+					"Or make sure there's data in the side column and row to work with. ");
 		}
 	}
 
-	
-	public void readRowAction() throws ArrayIndexOutOfBoundsException, NumberFormatException {
+	/**
+	 * Method invoked when user presses "Read Row" button. 
+	 * Extracts data from the given row in the Array7x7 object, stores it in the side row, and shows it 
+	 * on the display.
+	 * @throws ArrayIndexOutOfBoundsException: in case the user tries to write to/read from an invalid row.
+	 * @throws NumberFormatException: in case the user enters a String or a floating point number. 
+	 */
+	public void readRow() throws ArrayIndexOutOfBoundsException, NumberFormatException {
 		int row = Integer.parseInt(inputRow.getText())-1;		
 		for (int i = 0; i < 7; i++) {
 			int value = matrixArray.getRow(row).getElement(i);
@@ -106,7 +119,14 @@ public class TestArray7x7 extends JPanel implements ActionListener {
 		}
 	}
 	
-	public void writeRowAction() throws ArrayIndexOutOfBoundsException, NumberFormatException {
+	/**
+	 * Method invoked when user presses "Write Row" button. 
+	 * Extracts data from the lower row, stores it in the given row in the Array7x7 object, and shows it 
+	 * on the display. 
+	 * @throws ArrayIndexOutOfBoundsException: in case the user tries to write to/read from an invalid row.
+	 * @throws NumberFormatException: in case the user enters a String or a floating point number. 
+	 */
+	public void writeRow() throws ArrayIndexOutOfBoundsException, NumberFormatException {
 		int row = Integer.parseInt(inputRow.getText())-1;	
 		for (int i = 0; i < 7; i++) {
 			int value = Integer.parseInt(rows[i].getText());
@@ -116,7 +136,14 @@ public class TestArray7x7 extends JPanel implements ActionListener {
 		matrixArray.setRow(row, rowsArray);
 	}
 	
-	public void readColAction() throws ArrayIndexOutOfBoundsException, NumberFormatException {	
+	/**
+	 * Method invoked when user presses "Read Col" button. 
+	 * Extracts data from the given column in the Array7x7 object, stores it in the side column, and shows it 
+	 * on the display. 
+	 * @throws ArrayIndexOutOfBoundsException: in case the user tries to write to/read from an invalid column.
+	 * @throws NumberFormatException: in case the user enters a String or a floating point number. 
+	 */
+	public void readCol() throws ArrayIndexOutOfBoundsException, NumberFormatException {	
 		int col = Integer.parseInt(inputCol.getText())-1;	
 		for (int i = 0; i < 7; i++) {
 			int data = matrixArray.getCol(col).getElement(i);
@@ -124,7 +151,14 @@ public class TestArray7x7 extends JPanel implements ActionListener {
 		}
 	}
 	
-	public void writeColAction() throws ArrayIndexOutOfBoundsException, NumberFormatException {
+	/**
+	 * Method invoked when user presses "Write Col" button. 
+	 * Extracts data from the side column, stores it in the given column in the Array7x7 object and shows it 
+	 * on the display. 
+	 * @throws ArrayIndexOutOfBoundsException: in case the user tries to write to/read from an invalid column.
+	 * @throws NumberFormatException: in case the user enters a String or a floating point number. 
+	 */
+	public void writeCol() throws ArrayIndexOutOfBoundsException, NumberFormatException {
 		int col = Integer.parseInt(inputCol.getText())-1;		
 		for (int i = 0; i < 7; i++) {
 			int value = Integer.parseInt(cols[i].getText());
