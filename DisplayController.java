@@ -92,6 +92,33 @@ public class DisplayController {
 		timer.schedule( new Rightwards(), 30, 100);
 	}
 	
+	public void moveRightReversed(String usrText) {
+		timer = new Timer();
+		charArray = new Array7x7[usrText.length() + 5];
+		
+		/* 
+		* Adding some extra empty <space> characters to the end of the 
+		* user's text to allows the letters disappear completely from the display and not "freeze" on it when
+		* the timer has reached the end of the array.
+		*/
+		
+		for (int extra = 0; extra < 5; extra ++) {
+			charArray[extra] = new Array7x7();
+			charArray[extra] = charsObj.getCharacter(' ');
+		}
+		
+		// converting the text into arrays with colours (Arrays7x7s with colour values).
+		
+		int current = usrText.length()-1;
+		for (int index = 5; index < charArray.length; index++) {
+			charArray[index] = new Array7x7();
+			charArray[index] = charsObj.getCharacterReversed(usrText.charAt(current));
+			current--; // going backwards in the user's string
+		}
+		
+		timer.schedule( new Rightwards(), 30, 100);
+	}
+	
 	/** 
 	 * Private TimerTask class used to make text flow to the left.
 	 * @author Aliona
@@ -141,7 +168,7 @@ public class DisplayController {
 			/*
 			 * The method that shifts columns in each of the five panels one by one. Invokes Array7x7's .shiftRight().
 			 * Has to be implemented through selection and by incrementing the index. Using a for-loop e.g. would
-			 * shift all text at one, in one execution. 
+			 * shift all text at once, in one execution. 
 			 */
 			backPanel[4].shiftRight(backPanel[3].getCol(6));
 			backPanel[3].shiftRight(backPanel[2].getCol(6),backPanel[4].getCol(0));

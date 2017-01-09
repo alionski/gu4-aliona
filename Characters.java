@@ -223,7 +223,7 @@ public class Characters {
         charMap.put('[', characters[LEFT_SQUARE_BRACKET]);
         charMap.put(']', characters[RIGHT_SQUARE_BRACKET]);
         charMap.put('_', characters[UNDER_SCORE]);
-        charMap.put('´', characters[RIGHT_APOSTROPHE]);
+        charMap.put('ï¿½', characters[RIGHT_APOSTROPHE]);
         charMap.put('`', characters[LEFT_APOSTROPHE]);
         charMap.put('^', characters[CARET]);
         charMap.put('*', characters[STAR]);
@@ -286,6 +286,32 @@ public class Characters {
         }
         return characters[UNKNOWN];
     }
+    
+    // Returns a reversed version of the character, used when scrolling text right.
+    // Messy solution since Array7x7.getArray() doesn't return a copy, just the reference.
+    public Array7x7 getCharacterReversed(char character) {
+        if (charMap.containsKey(character)) {
+            // Get the source array
+            int[][] src = charMap.get(character).getArray();
+            // Create a new array
+            int[][] reverse = new int[src.length][src[0].length];
+            // Copy the source array into the new array
+            for(int i = 0; i < src.length; i++) {
+                System.arraycopy(src[i], 0, reverse[i], 0, src[i].length);
+            }
+
+            // Reverse the new array
+            for(int j = 0; j < reverse.length; j++) {
+                for(int i = 0; i < reverse[j].length / 2; i++) {
+                    int temp = reverse[j][i];
+                    reverse[j][i] = reverse[j][reverse[j].length - i - 1];
+                    reverse[j][reverse[j].length - i - 1] = temp;
+                }
+            }
+            return new Array7x7(reverse);
+        }
+        return characters[UNKNOWN];
+}
 
     // Used for Singleton-functionality.
     private static class CharactersHolder {

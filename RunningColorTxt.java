@@ -23,6 +23,7 @@ public class RunningColorTxt extends JPanel implements ActionListener{
 	private JTextField usrInput = new JTextField();
 	private JButton shiftLeft = new JButton("Go left!");
 	private JButton shiftRight = new JButton("Go right!");
+	private JButton shiftRightMirrored = new JButton("Go right (mirrored)!");
 	private JPanel lower = new JPanel();
 	private String usrText = "";
 	
@@ -32,12 +33,14 @@ public class RunningColorTxt extends JPanel implements ActionListener{
 	public RunningColorTxt() {
 
 		setLayout(new BorderLayout());
-		lower.setLayout(new GridLayout(1, 3));
+		lower.setLayout(new GridLayout(1, 4));
 		shiftLeft.addActionListener(this);
 		shiftRight.addActionListener(this);
+		shiftRightMirrored.addActionListener(this);
 		lower.add(usrInput);
 		lower.add(shiftLeft);
 		lower.add(shiftRight);
+		lower.add(shiftRightMirrored);
 		add(lower, BorderLayout.SOUTH);
 		add(display, BorderLayout.CENTER);		
 	}
@@ -65,6 +68,10 @@ public class RunningColorTxt extends JPanel implements ActionListener{
 			usrText = usrInput.getText();
 			ctrl.moveRight(usrText);
 			enableButtons(false); // the buttons are disabled, re-enabled by the controller when the timer is cancelled
+		} else if (e.getSource() == shiftRightMirrored) {
+			usrText = usrInput.getText();
+			ctrl.moveRightReversed(usrText);
+			enableButtons(false);
 		}
 	}
 	
@@ -75,6 +82,7 @@ public class RunningColorTxt extends JPanel implements ActionListener{
 	public void enableButtons(boolean OnOff) {
 		shiftLeft.setEnabled(OnOff);
 		shiftRight.setEnabled(OnOff);
+		shiftRightMirrored.setEnabled(OnOff);
 		
 	}
 	
